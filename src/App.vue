@@ -3,9 +3,11 @@ import { ref } from 'vue';
 import YandexMapComponent from './YandexMapComponent.vue'; // Импортируем новый компонент карты
 
 const activeTab = ref('analytics');
+const iframeLoaded = ref(false);
 
 const setActiveTab = (tab) => {
   activeTab.value = tab;
+  iframeLoaded.value = false; // Сбрасываем флаг загрузки при смене таба
 };
 </script>
 
@@ -32,12 +34,16 @@ const setActiveTab = (tab) => {
 
     <main>
       <div class="dashboard-container">
-        <iframe
-          v-if="activeTab === 'analytics'"
-          src="https://datalens.yandex/ks3o1nqdhejs6?_theme=dark&_lang=ru"
-        ></iframe>
+        <div v-if="activeTab === 'analytics'" class="analytics-content">
+          <div v-if="!iframeLoaded" class="loader">Загрузка...</div>
+          <iframe
+            src="https://datalens.yandex/ks3o1nqdhejs6?_theme=dark&_lang=ru"
+            loading="lazy"
+            @load="iframeLoaded = true"
+          ></iframe>
+        </div>
         
-        <YandexMapComponent v-if="activeTab === 'map'" />
+        <YandexMapComponent v-if="activeTab === 'map'" class="map-content" />
       </div>
     </main>
   </div>
@@ -93,12 +99,31 @@ main {
   flex: 1;
   position: relative;
   width: 100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.analytics-content,
+.map-content {
+  width: 100%;
+  height: 100%;
 }
 
 iframe {
   width: 100%;
   height: 100%;
   border: none;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #495057;
 }
 
 @media (max-width: 768px) {

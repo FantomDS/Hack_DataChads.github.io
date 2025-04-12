@@ -1,4 +1,3 @@
-<!-- YandexMapComponent.vue -->
 <template>
   <div class="map-container">
     <div ref="mapContainer" class="map"></div>
@@ -33,6 +32,7 @@ export default {
     };
 
     const initMap = async () => {
+      await loadYmaps();
       const map = new window.ymaps.Map(mapContainer.value, {
         center: [55.751574, 37.573856],
         zoom: 5,
@@ -53,10 +53,11 @@ export default {
                 const lng = parseFloat(row.longitude);
                 
                 if (!isNaN(lat) && !isNaN(lng)) {
-                  new window.ymaps.Placemark(
+                  const placemark = new window.ymaps.Placemark(
                     [lat, lng],
                     { balloonContent: `Широта: ${lat}, Долгота: ${lng}` }
-                  ).addTo(map.geoObjects);
+                  );
+                  map.geoObjects.add(placemark);
                 }
               });
             },
@@ -66,7 +67,6 @@ export default {
 
     onMounted(async () => {
       try {
-        await loadYmaps();
         await initMap();
       } catch (error) {
         console.error('Ошибка инициализации карты:', error);
@@ -79,3 +79,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
+</style>
