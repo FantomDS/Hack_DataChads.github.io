@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import MapComponent from './MapComponent.vue'; // Импортируем компонент карты
+import YandexMapComponent from './YandexMapComponent.vue'; // Импортируем новый компонент карты
 
 const activeTab = ref('analytics');
 
@@ -37,7 +37,7 @@ const setActiveTab = (tab) => {
           src="https://datalens.yandex/ks3o1nqdhejs6?_theme=dark&_lang=ru"
         ></iframe>
         
-        <MapComponent v-if="activeTab === 'map'" />
+        <YandexMapComponent v-if="activeTab === 'map'" />
       </div>
     </main>
   </div>
@@ -51,7 +51,7 @@ const setActiveTab = (tab) => {
 }
 
 header {
-  background: #f0f2f5;
+  background: #181818;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   flex-shrink: 0;
