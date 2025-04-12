@@ -91,6 +91,7 @@ header {
 }
 
 main {
+  width: 90%;
   flex: 1;
   display: flex;
 }
@@ -124,6 +125,23 @@ iframe {
   transform: translate(-50%, -50%);
   font-size: 1.2rem;
   color: #495057;
+}
+
+@media (min-width: 1000px) {
+  .dashboard-container {
+    height: calc(100vh - 60px); /* Вычитаем высоту шапки */
+  }
+
+  .analytics-content,
+  .map-content {
+    width: 100%;
+    height: 100%;
+  }
+
+  iframe {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @media (max-width: 768px) {
