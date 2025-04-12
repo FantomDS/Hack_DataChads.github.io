@@ -34,7 +34,7 @@ export default {
     const initMap = async () => {
       await loadYmaps();
       const map = new window.ymaps.Map(mapContainer.value, {
-        center: [55.751574, 37.573856],
+        center: [-23, -46],
         zoom: 5,
       });
 
